@@ -1,0 +1,13 @@
+{
+  "name": "wfe-db",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "",
+  "author": "Bintjes <bintjes@gmail.com> inspired by alexandre gaudencio",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^3.12.2",
+    "mysql": "^2.12.0",
+    "sequelize": "^3.28.0"
+  }
+}
