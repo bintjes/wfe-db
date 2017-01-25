@@ -4,7 +4,7 @@
   "main": "index.js",
   "repository": "",
   "author": "Bintjes <bintjes@gmail.com> inspired by alexandre gaudencio",
-  "license": "MIT",
+  "license": "WTFPL",
   "dependencies": {
     "eslint": "^3.12.2",
     "mysql": "^2.12.0",
