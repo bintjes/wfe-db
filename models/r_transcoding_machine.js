@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
     mount_flipstories: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "\SGINAS\flipstories\"
+      defaultValue: ""
     },
     maxjob: {
       type: DataTypes.INTEGER(5),
