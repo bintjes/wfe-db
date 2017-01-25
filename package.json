@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "",
-  "author": "Bintjes <bintjes@gmail.com> inspired by alexandre gaudencio",
+  "author": "Bintjes <bintjes@gmail.com>",
   "license": "WTFPL",
   "dependencies": {
     "eslint": "^3.12.2",
