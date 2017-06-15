@@ -1,30 +1,30 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('r_publishing_hn', {
-    r_publishing_hn_id: {
-      type: DataTypes.INTEGER(10),
+  return sequelize.define('workflow_hn', {
+    id: {
+      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     workflow_id: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
-        model: 'r_publishing_workflow',
-        key: 'workflow_id'
+        model: 'workflow',
+        key: 'id'
       }
     },
     hn_type: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(4),
       allowNull: true
     },
     label: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(45),
       allowNull: false
     }
   }, {
-    tableName: 'r_publishing_hn'
+    tableName: 'workflow_hn'
   });
 };

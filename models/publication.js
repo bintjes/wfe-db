@@ -1,32 +1,32 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('publication_workflow', {
-    publication_id: {
-      type: DataTypes.INTEGER(10),
+  return sequelize.define('publication', {
+    id: {
+      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     workflow_id: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
-        model: 'r_publishing_workflow',
-        key: 'workflow_id'
+        model: 'workflow',
+        key: 'id'
       }
     },
     id_status: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
-      defaultValue: "1",
+      defaultValue: '1',
       references: {
         model: 'publication_status',
-        key: 'id_status'
+        key: 'id'
       }
     },
     housenumber: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     date_creation: {
@@ -38,36 +38,36 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     created_by: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       references: {
-        model: 'adm_users',
-        key: 'iduser'
+        model: 'users',
+        key: 'id'
       }
     },
     farm_id: {
-      type: DataTypes.INTEGER(1),
+      type: DataTypes.INTEGER(1).UNSIGNED,
       allowNull: false,
-      defaultValue: "1"
+      defaultValue: '1'
     },
     xml_origin: {
       type: "BLOB",
       allowNull: true
     },
     dalet_videopath: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1000),
       allowNull: true
     },
     lng_mixnews_iid: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
-        model: 'r_lng_language',
-        key: 'lng_mixnews_iid'
+        model: 'lang',
+        key: 'mixnews_iid'
       }
     },
     message: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1000),
       allowNull: true
     },
     last_run: {
@@ -75,6 +75,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'publication_workflow'
+    tableName: 'publication'
   });
 };

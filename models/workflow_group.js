@@ -1,22 +1,22 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('r_publishing', {
-    publishing_id: {
-      type: DataTypes.INTEGER(10),
+  return sequelize.define('workflow_group', {
+    id: {
+      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
-    tableName: 'r_publishing'
+    tableName: 'workflow_group'
   });
 };

@@ -1,22 +1,22 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('r_publishing_rule_type', {
-    rule_type_id: {
-      type: DataTypes.INTEGER(10),
+  return sequelize.define('rule', {
+    id: {
+      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    rule_type_description: {
-      type: DataTypes.STRING,
+    description: {
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     service_url: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(500),
       allowNull: false
     }
   }, {
-    tableName: 'r_publishing_rule_type'
+    tableName: 'rule'
   });
 };
