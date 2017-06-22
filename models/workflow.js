@@ -1,18 +1,19 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Workflow', {
+  let model = sequelize.define('Workflow', {
     id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    publishing_id: {
+    group_id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
+      field : 'group_id',
       references: {
-        model: 'workflow_group',
+        model: 'WorkflowGroup',
         key: 'id'
       }
     },
@@ -44,6 +45,30 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: '0'
     }
   }, {
-    tableName: 'workflow'
+    tableName: 'workflow',
+    classMethods : {
+      associate : (models) => {
+        model.belongsTo(models.WorkflowGroup, {
+          as : 'workflowGroup',
+          foreignKey : 'group_id'
+        }),
+        model.hasMany(models.WorkflowTask, {
+          as: 'workflowTasks',
+          foreignKey: 'workflow_id'
+        }),
+        model.hasMany(models.WorkflowHn, {
+          as: 'workflowHns',
+          foreignKey: 'workflow_id'
+        }),
+        model.hasMany(models.WorkflowLang, {
+          as: 'workflowLangs',
+          foreignKey: 'workflow_id'
+        }),
+        model.hasMany(models.WorkflowRule, {
+          as: 'workflowRules',
+          foreignKey: 'id'
+        })
+      }
+      }
   });
 };

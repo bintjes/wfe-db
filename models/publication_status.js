@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('publication_status', {
+  let model =  sequelize.define('PublicationStatus', {
     id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,

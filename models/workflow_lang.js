@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('workflow_lang', {
+  let model =  sequelize.define('WorkflowLang', {
     id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
@@ -25,6 +25,18 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   }, {
-    tableName: 'workflow_lang'
+    tableName: 'workflow_lang',
+    classMethods : {
+      associate : (models) => {
+        model.belongsTo(models.Language, {
+          as : 'Language',
+          foreignKey : 'lng_id'
+        }),
+        model.belongsTo(models.Workflow, {
+          as : 'Workflow',
+          foreignKey : 'workflow_id'
+        })
+      }
+    }
   });
 };

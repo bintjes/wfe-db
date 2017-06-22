@@ -1,8 +1,8 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('transcoding_job', {
-    id_job: {
+  let model = sequelize.define('TranscodingJob', {
+    id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
@@ -16,11 +16,7 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    id_machine: {
-      type: DataTypes.INTEGER(10).UNSIGNED,
-      allowNull: false
-    },
-    id_jobstatus: {
+    transcoding_status_id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       defaultValue: '1',
@@ -33,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    id_factory: {
+    factory_id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: true,
       references: {
@@ -43,10 +39,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     scheduled: {
       type: DataTypes.DATE,
-      allowNull: true
-    },
-    submitted_by: {
-      type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: true
     },
     uuid: {
@@ -60,12 +52,28 @@ module.exports = function(sequelize, DataTypes) {
     video_duration: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: true
-    },
-    error_log: {
-      type: DataTypes.STRING(255),
-      allowNull: true
     }
   }, {
-    tableName: 'transcoding_job'
+    tableName: 'transcoding_job',
+    classMethods : {
+      associate : (models) => {
+        model.belongsTo(models.TranscodingFactory, {
+          as : 'transcodingFactory',
+          foreignKey : 'factory_id'
+        }),
+        model.belongsTo(models.TranscodingStatus, {
+          as : 'transcodingStatus',
+          foreignKey : 'transcoding_status_id'
+        }),
+        model.belongsTo(models.PublicationTask, {
+          as : 'publicationTask',
+          foreignKey : 'publication_task_id'
+        })
+
+
+      }
+    }
+
+
   });
 };

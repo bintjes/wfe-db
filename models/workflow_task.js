@@ -1,18 +1,18 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('workflow_task', {
+  let model = sequelize.define('WorkflowTask', {
     id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    publishing_task_type_id: {
+    task_type_id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
-        model: 'task',
+        model: 'Task',
         key: 'id'
       }
     },
@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
-        model: 'workflow',
+        model: 'Workflow',
         key: 'id'
       }
     },
@@ -33,6 +33,19 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'workflow_task'
+    tableName: 'workflow_task',
+    classMethods : {
+      associate : (models) => {
+        model.belongsTo(models.Workflow, {
+          as : 'workflow',
+          foreignKey : 'workflow_id'
+        }),
+        model.belongsTo(models.Task, {
+          as : 'task',
+          foreignKey : 'task_type_id'
+        })
+
+      }
+    }
   });
 };

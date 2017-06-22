@@ -1,22 +1,18 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('publication_task', {
+  let model =  sequelize.define('PublicationTask', {
     id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    tasktempl_id: {
-      type: DataTypes.INTEGER(10).UNSIGNED,
-      allowNull: false
-    },
-    id_status: {
+    status_id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
-        model: 'publication_status',
+        model: 'PublicationStatus',
         key: 'id'
       }
     },
@@ -40,7 +36,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
-        model: 'publication',
+        model: 'Publication',
         key: 'id'
       }
     },
@@ -53,6 +49,18 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
-    tableName: 'publication_task'
+    tableName: 'publication_task',
+    classMethods : {
+      associate: (models) => {
+        model.hasOne(models.TranscodingJob, {
+          as : 'transcodingJob',
+          foreignKey : 'publication_task_id'
+        }),
+        model.belongsTo(models.PublicationStatus, {
+          as : 'publicationStatus',
+          foreignKey : 'status_id'
+        })
+      }
+    }
   });
 };

@@ -1,38 +1,26 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('transcoding_factory', {
+  let model = sequelize.define('TranscodingFactory', {
     id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    factory_stub: {
+    slug: {
       type: DataTypes.STRING(45),
       allowNull: false
     },
-    factory_label: {
-      type: DataTypes.STRING(45),
-      allowNull: false
-    },
-    factory_name: {
+    name: {
       type: DataTypes.STRING(45),
       allowNull: true
     },
-    factory_description: {
+    description: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    id_login: {
-      type: DataTypes.INTEGER(10).UNSIGNED,
-      allowNull: false,
-      references: {
-        model: 'transcoding_login',
-        key: 'id_login'
-      }
-    },
-    id_machine: {
+    machine_id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
@@ -53,20 +41,20 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(4),
       allowNull: false
     },
-    default_priority: {
-      type: DataTypes.STRING(45),
-      allowNull: false,
-      defaultValue: '1'
-    },
     default_schedule: {
       type: DataTypes.TIME,
       allowNull: true
-    },
-    path_to_file: {
-      type: DataTypes.STRING(255),
-      allowNull: true
     }
   }, {
-    tableName: 'transcoding_factory'
+    tableName: 'transcoding_factory',
+    classMethods : {
+      associate : (models) => {
+
+        model.belongsTo(models.TranscodingMachine, {
+          as : 'transcodingMachine',
+          foreignKey : 'machine_id'
+        })
+      }
+    }
   });
 };

@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('publication', {
+  let model =  sequelize.define('Publication', {
     id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
@@ -12,16 +12,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
-        model: 'workflow',
+        model: 'Workflow',
         key: 'id'
       }
     },
-    id_status: {
+    status_id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       defaultValue: '1',
       references: {
-        model: 'publication_status',
+        model: 'PublicationStatus',
         key: 'id'
       }
     },
@@ -33,24 +33,19 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    last_modified: {
+    date_modified: {
       type: DataTypes.DATE,
       allowNull: true
     },
-    created_by: {
+    user_id: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       references: {
-        model: 'users',
+        model: 'User',
         key: 'id'
       }
     },
-    farm_id: {
-      type: DataTypes.INTEGER(1).UNSIGNED,
-      allowNull: false,
-      defaultValue: '1'
-    },
-    xml_origin: {
+    json: {
       type: "BLOB",
       allowNull: true
     },
@@ -58,23 +53,43 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(1000),
       allowNull: true
     },
-    lng_mixnews_iid: {
+    lng_id: {
       type: DataTypes.INTEGER(10).UNSIGNED,
       allowNull: false,
       references: {
-        model: 'lang',
-        key: 'mixnews_iid'
+        model: 'Lang',
+        key: 'id'
       }
     },
     message: {
       type: DataTypes.STRING(1000),
       allowNull: true
-    },
-    last_run: {
-      type: DataTypes.DATE,
-      allowNull: true
     }
   }, {
-    tableName: 'publication'
+    tableName: 'publication',
+    classMethods : {
+      associate : (models) => {
+        model.belongsTo(models.Workflow, {
+          as : 'workflow',
+          foreignKey : 'workflow_id'
+        }),
+        model.hasMany(models.PublicationTask, {
+          as : 'publicationTasks',
+          foreignKey : 'publication_id'
+        }),
+        model.belongsTo(models.PublicationStatus, {
+          as : 'publicationStatus',
+          foreignKey : 'status_id'
+        }),
+        model.belongsTo(models.User, {
+          as : 'user',
+          foreignKey : 'user_id'
+        }),
+        model.belongsTo(models.Language, {
+          as : 'Language',
+          foreignKey : 'lng_id'
+        })
+      }
+    }
   });
 };
